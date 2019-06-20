@@ -17,7 +17,9 @@ class Day extends Component {
     theme: PropTypes.object,
     marking: PropTypes.any,
     onPress: PropTypes.func,
-    date: PropTypes.object
+    date: PropTypes.object,
+
+    textTheme: PropTypes.object
   };
 
   constructor(props) {
@@ -40,7 +42,7 @@ class Day extends Component {
 
   render() {
     let containerStyle = [this.style.base];
-    let textStyle = [this.style.text];
+    let textStyle = [this.style.text, this.props.textTheme];
 
     let marking = this.props.marking || {};
     if (marking && marking.constructor === Array && marking.length) {

@@ -70,7 +70,11 @@ class Calendar extends Component {
     // Handler which gets executed when press arrow icon left. It receive a callback can go next month
     onPressArrowRight: PropTypes.func,
     // Style passed to the header
-    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array])
+    headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+    
+    // colors for weekends and weekdays
+    weekendColor: PropTypes.string,
+    weekdayColor: PropTypes.string
   };
 
   constructor(props) {
@@ -165,6 +169,15 @@ class Calendar extends Component {
     const date = day.getDate();
     const dateAsObject = xdateToData(day);
 
+    const isWeekend = id === 0 || id === 6;
+    let textTheme; 
+
+    if (isWeekend && this.props.weekendColor) {
+      textTheme = { color: this.props.weekendColor };
+    } else if (!isWeekend && this.props.weekdayColor) {
+      textTheme = { color: this.props.weekdayColor };
+    }
+
     return (
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
@@ -175,6 +188,7 @@ class Calendar extends Component {
           onLongPress={this.longPressDay}
           date={dateAsObject}
           marking={this.getDateMarking(day)}
+          textTheme={textTheme}
         >
           {date}
         </DayComp>

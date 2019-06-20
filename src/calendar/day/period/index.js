@@ -24,6 +24,7 @@ class Day extends Component {
     date: PropTypes.object,
 
     markingExists: PropTypes.bool,
+    textTheme: PropTypes.object,
   };
 
   constructor(props) {
@@ -113,7 +114,7 @@ class Day extends Component {
 
   render() {
     const containerStyle = [this.style.base];
-    const textStyle = [this.style.text];
+    const textStyle = [this.style.text, this.props.textTheme];
     let leftFillerStyle = {};
     let rightFillerStyle = {};
     let fillerStyle = {};
