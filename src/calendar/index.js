@@ -151,11 +151,18 @@ class Calendar extends Component {
     const minDate = parseDate(this.props.minDate);
     const maxDate = parseDate(this.props.maxDate);
     let state = '';
+
+    const isWeekend = id === 0 || id === 6;
+
     if (this.props.disabledByDefault) {
       state = 'disabled';
     } else if ((minDate && !dateutils.isGTE(day, minDate)) || (maxDate && !dateutils.isLTE(day, maxDate))) {
       state = 'disabled';
     } else if (!dateutils.sameMonth(day, this.state.currentMonth)) {
+      state = 'disabled';
+    } else if (isWeekend && this.props.weekendDisabled) {
+      state = 'disabled';
+    } else if (!isWeekend && this.props.weekdayDisabled) {
       state = 'disabled';
     } else if (dateutils.sameDate(day, XDate())) {
       state = 'today';
@@ -168,8 +175,6 @@ class Calendar extends Component {
     const DayComp = this.getDayComponent();
     const date = day.getDate();
     const dateAsObject = xdateToData(day);
-
-    const isWeekend = id === 0 || id === 6;
     let textTheme; 
 
     if (isWeekend && this.props.weekendColor) {
