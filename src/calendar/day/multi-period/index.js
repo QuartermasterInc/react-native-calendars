@@ -75,14 +75,13 @@ class Day extends Component {
 
     const marking = this.props.marking || {};
     const periods = this.renderPeriods(marking);
+    const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
 
     if (marking.selected) {
       containerStyle.push(this.style.selected);
       textStyle.push(this.style.selectedText);
     } else if (
-      typeof marking.disabled !== 'undefined'
-        ? marking.disabled
-        : this.props.state === 'disabled'
+      isDisabled
     ) {
       textStyle.push(this.style.disabledText);
     } else if (this.props.state === 'today') {
@@ -94,7 +93,7 @@ class Day extends Component {
         style={{
           alignSelf: 'stretch'
         }}>
-        <TouchableOpacity testID={this.props.testID} style={containerStyle} onPress={this.onDayPress}>
+        <TouchableOpacity testID={this.props.testID} style={containerStyle} disabled={isDisabled} onPress={this.onDayPress}>
           <Text allowFontScaling={false} style={textStyle}>
             {String(this.props.children)}
           </Text>
